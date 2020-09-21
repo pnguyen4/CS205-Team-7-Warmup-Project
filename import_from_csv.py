@@ -3,24 +3,23 @@ import sqlite3, csv
 conn = sqlite3.connect('StateUniversities.db')
 c = conn.cursor()
 
-c.execute('''CREATE TABLE universities (name text, population integer, city text, state text)''')
+c.execute('''CREATE TABLE states (id integer PRIMARY KEY, name text, capital text, population integer, numberOfInstitutions integer)''')
+file1 = open('states.csv', 'r')
 
-with open('universities.csv','r') as inflie:
-    records = 0;
-    for row in inflie:
-        c.execute("INSERT INTO universities VALUES (?,?,?,?)", row.split(","))
-        conn.commit()
-        records+=1
-inflie.close()
+rows = csv.reader(file1, delimiter=',', quotechar='"')
+for row in rows:
+    c.execute('''INSERT INTO states(name, capital, population, numberofInstitutions) VALUES (?,?,?,?)''', row)
+    conn.commit()
+file1.close()
 
-c.execute('''CREATE TABLE states (name text, capital text, population integer, numberOfInstitutions integer)''')
-with open('states.csv','r') as flie:
-    records = 0;
-    for row in flie:
-        c.execute("INSERT INTO states VALUES (?,?,?,?)", row.split(","))
-        conn.commit()
-        records+=1
-flie.close()
+c.execute('''CREATE TABLE universities (id integer PRIMARY KEY, name text, population integer, city text, state integer,FOREIGN KEY (state) REFERENCES states (id) )''')
+
+file2 = open('universities.csv', 'r')
+rows = csv.reader(file2, delimiter=',', quotechar='"')
+for row in rows:
+    c.execute('''INSERT INTO universities(name, population, city, state) VALUES(?,?,?, (SELECT id FROM states WHERE name = ?))''', row)
+    conn.commit()
+flie2.close()
 
 conn.close()
 print("\n imported successfully")
