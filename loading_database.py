@@ -33,14 +33,10 @@ def get_state_university(conn, arg):
     return c.fetchall()[0][0]
 
 def get_population_university(conn, arg):
-    c = conn.cursor()
-    c.execute('''SELECT population FROM universities WHERE name=?''', (arg,))
-    return c.fetchall()[0][0]
+    raise NotImplementedError
 
 def get_city_university(conn, arg):
-    c = conn.cursor()
-    c.execute('''SELECT city FROM universities WHERE name=?''', (arg,))
-    return c.fetchall()[0][0]
+    raise NotImplementedError
 
 def get_population_state(conn, arg):
     raise NotImplementedError
