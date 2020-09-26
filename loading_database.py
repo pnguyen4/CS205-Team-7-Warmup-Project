@@ -15,7 +15,7 @@ def test():
     assert get_population_state(conn, "Vermont") == 625741
     assert get_capital_state(conn, "Vermont") == "Montpelier"
     assert list_university_state(conn, "Virginia") == ['University of Virginia']
-    assert in_state_capital_university(conn, "Columbia university") == '0'
+    assert in_state_capital_university(conn, "Columbia university") == 'FALSE'
     print("Passed all test cases")
     conn.close()
 
@@ -78,8 +78,8 @@ def in_state_capital_university(conn, arg):
     c = conn.cursor()
     c.execute('''SELECT 
                 CASE WHEN city = capital 
-                    THEN '1' 
-                    ELSE '0' 
+                    THEN 'TRUE' 
+                    ELSE 'FALSE' 
                 END 
                 FROM (universities JOIN states ON universities.state = states.id)
                 WHERE universities.name = ?''', (arg,))
