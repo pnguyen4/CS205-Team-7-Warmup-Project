@@ -27,7 +27,7 @@ def parser(userInput):
 
 def match(tokens):
     switch = {
-        "QUIT":quit(),
+        "QUIT":quit,
 	"HELP": run_help,
 	#"LOAD-DATA": todo,
         "GET-POPULATION-STATE": simulate_sql,
