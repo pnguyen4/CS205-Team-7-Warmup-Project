@@ -62,24 +62,27 @@ def get_capital_state(conn, arg):
 
 def list_university_state(conn, arg):
     #raise NotImplementedError
+    result = ""
     c = conn.cursor()
     c.execute('''SELECT universities.name
                 FROM (universities JOIN states ON universities.state = states.id)
                 WHERE states.name = ?''', (arg,))
-    return c.fetchall()[0][0]
-
-
+    rows = c.fetchall()[0][0]
+    for row in rows:
+        result += rows[0]
+    return result
+        
 def in_state_capital_university(conn, arg):
-    c = conn.cursor()
-    c.execute('''SELECT 
-                CASE WHEN city = capital 
-                    THEN '1' 
-                    ELSE '0' 
-                END 
-                FROM (universities JOIN states ON universities.state = states.id)
-                WHERE universities.name = ?''', (arg,))
-    return c.fetchall()
-    #raise NotImplementedError
+    #c = conn.cursor()
+    #c.execute('''SELECT 
+     #           CASE WHEN city = capital 
+      #              THEN '1' 
+       #             ELSE '0' 
+        #        END 
+         #       FROM (universities JOIN states ON universities.state = states.id)
+          #      WHERE universities.name = ?''', (arg,))
+    #return c.fetchall()
+    raise NotImplementedError
 
 test()
 
