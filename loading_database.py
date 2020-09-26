@@ -26,7 +26,11 @@ def get_num_institutions_state(conn, arg):
     c.execute('''SELECT numberOfInstitutions FROM states WHERE name=?''', (arg,))
     # execute() returns a list of tuples but we know that this query should
     # only return one row with only one value. Not true for all queries!
-    return c.fetchall()[0][0]
+    result = c.fetchall()
+    if len(result) != 0:
+        return result[0][0]
+    else:
+        return "No result for argument: " + arg
 
 # Example 2: query one value that depends on both rows
 def get_state_university(conn, arg):
@@ -36,29 +40,49 @@ def get_state_university(conn, arg):
     c.execute('''SELECT states.name
               FROM (universities JOIN states ON universities.state = states.id)
               WHERE universities.name = ?''', (arg,))
-    return c.fetchall()[0][0]
+    result = c.fetchall()
+    if len(result) != 0:
+        return result[0][0]
+    else:
+        return "No result for argument: " + arg
+
 
 def get_population_university(conn, arg):
     c = conn.cursor()
     c.execute('''SELECT population FROM universities WHERE name=?''', (arg,))
-    return c.fetchall()[0][0]
+    result = c.fetchall()
+    if len(result) != 0:
+        return result[0][0]
+    else:
+        return "No result for argument: " + arg
 
 def get_city_university(conn, arg):
     c = conn.cursor()
     c.execute('''SELECT city FROM universities WHERE name=?''', (arg,))
-    return c.fetchall()[0][0]
+    result = c.fetchall()
+    if len(result) != 0:
+        return result[0][0]
+    else:
+        return "No result for argument: " + arg
 
 def get_population_state(conn, arg):
     #raise NotImplementedError
     c = conn.cursor()
     c.execute('''SELECT population FROM states WHERE name=?''', (arg,))
-    return c.fetchall()[0][0]
+    result = c.fetchall()
+    if len(result) != 0:
+        return result[0][0]
+    else:
+        return "No result for argument: " + arg
 
 def get_capital_state(conn, arg):
     c = conn.cursor()
     c.execute('''SELECT capital FROM states WHERE name=?''', (arg,))
-    return c.fetchall()[0][0]
-    #raise NotImplementedError
+    result = c.fetchall()
+    if len(result) != 0:
+        return result[0][0]
+    else:
+        return "No result for argument: " + arg
 
 def list_university_state(conn, arg):
     #raise NotImplementedError
@@ -73,18 +97,21 @@ def list_university_state(conn, arg):
     if len(result) == 0:
        result = ["No data found"]
     return result
-        
+
 def in_state_capital_university(conn, arg):
     c = conn.cursor()
-    c.execute('''SELECT 
-                CASE WHEN city = capital 
-                    THEN 'TRUE' 
-                    ELSE 'FALSE' 
-                END 
+    c.execute('''SELECT
+                CASE WHEN city = capital
+                    THEN 'TRUE'
+                    ELSE 'FALSE'
+                END
                 FROM (universities JOIN states ON universities.state = states.id)
                 WHERE universities.name = ?''', (arg,))
-    return c.fetchall()[0][0]
-    raise NotImplementedError
+    result = c.fetchall()
+    if len(result) != 0:
+        return result[0][0]
+    else:
+        return "No result for argument: " + arg
 
 test()
 
