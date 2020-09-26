@@ -14,7 +14,6 @@ def test():
     assert get_city_university(conn, "Cornell University") == "Ithaca"
     assert get_population_state(conn, "Vermont") == 625741
     assert get_capital_state(conn, "Vermont") == "Montpelier"
-    #print(list_university_state(conn, "New York"))
     assert list_university_state(conn, "Virginia") == ['University of Virginia']
     assert in_state_capital_university(conn, "Columbia university") == '0'
     print("Passed all test cases")
@@ -71,6 +70,8 @@ def list_university_state(conn, arg):
     rows = c.fetchall()
     for row in rows:
         result.append(row[0])
+    if len(result) == 0:
+       result = ["No data found"]
     return result
         
 def in_state_capital_university(conn, arg):
