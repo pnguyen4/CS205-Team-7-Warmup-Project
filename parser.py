@@ -1,7 +1,9 @@
+import loading_database as dbIO
 
 def test():
     print("Enter Command (run 'HELP' to see the guide):")
     while True:
+        print(" > ", end='')
         #get user input
         userInput = input()
         tokens = parser(userInput)
@@ -27,27 +29,23 @@ def parser(userInput):
 
 def match(tokens):
     switch = {
-        "QUIT":quit,
+        "QUIT": exit,
 	"HELP": run_help,
-	#"LOAD-DATA": todo,
-        "GET-POPULATION-STATE": simulate_sql,
-        "GET-POPULATION-UNIVERSITY": simulate_sql,
-        "GET-CITY-UNIVERSITY": simulate_sql,
-        "GET-CAPITAL-STATE": simulate_sql,
-        "LIST-UNIVERSITY-STATE": simulate_sql,
-        "IN-STATE-CAPITAL-UNIVERSITY": simulate_sql,
-	"GET-STATE-UNIVERSITY": simulate_sql,
-	"GET-NUM-INSTITUTIONS-STATE": simulate_sql
+	"LOAD-DATA": load_data,
+        "GET-POPULATION-STATE": dbIO.get_population_state,
+        "GET-POPULATION-UNIVERSITY": dbIO.get_population_university,
+        "GET-CITY-UNIVERSITY": dbIO.get_city_university,
+        "GET-CAPITAL-STATE": dbIO.get_capital_state,
+        "LIST-UNIVERSITY-STATE": dbIO.list_university_state,
+        "IN-STATE-CAPITAL-UNIVERSITY": dbIO.in_state_capital_university,
+	"GET-STATE-UNIVERSITY": dbIO.get_state_university,
+	"GET-NUM-INSTITUTIONS-STATE": dbIO.get_num_institutions_state
     }
     command = tokens[0].upper()
     func = switch.get(command, error_msg)
     arg = tokens[1].replace('"', '')
-    return func(arg)
-
-
-def load_data(null_arg=''):
-    # This function should overwrite existing database (if there is one) and load csv data
-    return "TODO"
+    global database
+    return func(arg, database)
 
 
 def simulate_sql(arg):
@@ -58,13 +56,17 @@ def simulate_sql(arg):
     return test_output
 
 
-def error_msg(null_arg=''):
+def error_msg(_=None,__=None):
     return 'Invalid command. Run "HELP" to see valid commands and options.'
 
 
-def run_help(null_arg=''):
-    help = "Command Structure: [command] [string]\n"
+def run_help(_=None,__=None):
+    help = "Command Structure: [command] [argument]"
+    help += "\nSurrounding argument with quotes is optional.\n"
     help += "\nCommand List (not case sensitive):"
+    help += "\n\thelp"
+    help += "\n\tload-data"
+    help += "\n\tquit"
     help += "\n\tget-population-university"
     help += "\n\tget-population-state"
     help += "\n\tget-city-university"
@@ -74,5 +76,19 @@ def run_help(null_arg=''):
     help += "\n\tget-state-university"
     help += "\n\tget-num-institutions-state"
     return help
+
+
+def exit(_=None, __=None):
+    global database
+    if database != None:
+        database.close()
+    quit()
+
+
+database = None
+def load_data(_=None, __=None):
+    global database
+    database = dbIO.load_DB_wrapper()
+    return "Database Loaded."
 
 test()

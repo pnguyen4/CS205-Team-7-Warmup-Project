@@ -19,8 +19,13 @@ def test():
     print("Passed all test cases")
     conn.close()
 
+def load_DB_wrapper():
+    return db.load_database()
+
 # Example 1: query one value from one row
-def get_num_institutions_state(conn, arg):
+def get_num_institutions_state(arg, conn):
+    if conn == None:
+        return "No database detected! Run 'load-data'."
     c = conn.cursor()
     # arg must be in a tuple, or else each letter is interpreted as an arg
     c.execute('''SELECT numberOfInstitutions FROM states WHERE name=?''', (arg,))
@@ -33,7 +38,9 @@ def get_num_institutions_state(conn, arg):
         return "No result for argument: " + arg
 
 # Example 2: query one value that depends on both rows
-def get_state_university(conn, arg):
+def get_state_university(arg, conn):
+    if conn == None:
+        return "No database detected! Run 'load-data'."
     c = conn.cursor()
     # universities.state is the foreign key linking to
     # states.id, the row index and primary key in states table
@@ -47,7 +54,9 @@ def get_state_university(conn, arg):
         return "No result for argument: " + arg
 
 
-def get_population_university(conn, arg):
+def get_population_university(arg, conn):
+    if conn == None:
+        return "No database detected! Run 'load-data'."
     c = conn.cursor()
     c.execute('''SELECT population FROM universities WHERE name=?''', (arg,))
     result = c.fetchall()
@@ -56,7 +65,9 @@ def get_population_university(conn, arg):
     else:
         return "No result for argument: " + arg
 
-def get_city_university(conn, arg):
+def get_city_university(arg, conn):
+    if conn == None:
+        return "No database detected! Run 'load-data'."
     c = conn.cursor()
     c.execute('''SELECT city FROM universities WHERE name=?''', (arg,))
     result = c.fetchall()
@@ -65,7 +76,9 @@ def get_city_university(conn, arg):
     else:
         return "No result for argument: " + arg
 
-def get_population_state(conn, arg):
+def get_population_state(arg, conn):
+    if conn == None:
+        return "No database detected! Run 'load-data'."
     #raise NotImplementedError
     c = conn.cursor()
     c.execute('''SELECT population FROM states WHERE name=?''', (arg,))
@@ -75,7 +88,9 @@ def get_population_state(conn, arg):
     else:
         return "No result for argument: " + arg
 
-def get_capital_state(conn, arg):
+def get_capital_state(arg, conn):
+    if conn == None:
+        return "No database detected! Run 'load-data'."
     c = conn.cursor()
     c.execute('''SELECT capital FROM states WHERE name=?''', (arg,))
     result = c.fetchall()
@@ -84,7 +99,9 @@ def get_capital_state(conn, arg):
     else:
         return "No result for argument: " + arg
 
-def list_university_state(conn, arg):
+def list_university_state(arg, conn):
+    if conn == None:
+        return "No database detected! Run 'load-data'."
     #raise NotImplementedError
     result = []
     c = conn.cursor()
@@ -98,7 +115,9 @@ def list_university_state(conn, arg):
        result = ["No data found"]
     return result
 
-def in_state_capital_university(conn, arg):
+def in_state_capital_university(arg, conn):
+    if conn == None:
+        return "No database detected! Run 'load-data'."
     c = conn.cursor()
     c.execute('''SELECT
                 CASE WHEN city = capital
@@ -113,7 +132,7 @@ def in_state_capital_university(conn, arg):
     else:
         return "No result for argument: " + arg
 
-test()
+#test()
 
 # old test for loading data from database
 #########################
