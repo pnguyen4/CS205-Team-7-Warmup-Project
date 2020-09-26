@@ -15,7 +15,7 @@ def test():
     assert get_population_state(conn, "Vermont") == 625741
     assert get_capital_state(conn, "Vermont") == "Montpelier"
     assert list_university_state(conn, "Virginia") == "University of Virginia"
-    assert in_state_capital_university(conn, "Columbia university") == '1'
+    assert in_state_capital_university(conn, "Columbia university") == '0'
     print("Passed all test cases")
     conn.close()
 
@@ -67,21 +67,21 @@ def list_university_state(conn, arg):
     c.execute('''SELECT universities.name
                 FROM (universities JOIN states ON universities.state = states.id)
                 WHERE states.name = ?''', (arg,))
-    rows = c.fetchall()[0][0]
+    rows = c.fetchall()
     for row in rows:
-        result += rows[0]
+        result += row[0]
     return result
         
 def in_state_capital_university(conn, arg):
-    #c = conn.cursor()
-    #c.execute('''SELECT 
-     #           CASE WHEN city = capital 
-      #              THEN '1' 
-       #             ELSE '0' 
-        #        END 
-         #       FROM (universities JOIN states ON universities.state = states.id)
-          #      WHERE universities.name = ?''', (arg,))
-    #return c.fetchall()
+    c = conn.cursor()
+    c.execute('''SELECT 
+                CASE WHEN city = capital 
+                    THEN '1' 
+                    ELSE '0' 
+                END 
+                FROM (universities JOIN states ON universities.state = states.id)
+                WHERE universities.name = ?''', (arg,))
+    return c.fetchall()[0][0]
     raise NotImplementedError
 
 test()
