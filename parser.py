@@ -1,11 +1,13 @@
+
 def test():
     print("Enter Command (run 'HELP' to see the guide):")
-    #get user input
-    userInput = input()
-    tokens = parser(userInput)
-    #print(tokens)
-    output = match(tokens)
-    print(output)
+    while True:
+        #get user input
+        userInput = input()
+        tokens = parser(userInput)
+        #print(tokens)
+        output = match(tokens)
+        print(output)
 
 
 def parser(userInput):
@@ -25,6 +27,7 @@ def parser(userInput):
 
 def match(tokens):
     switch = {
+        "QUIT":quit(),
 	"HELP": run_help,
 	#"LOAD-DATA": todo,
         "GET-POPULATION-STATE": simulate_sql,
