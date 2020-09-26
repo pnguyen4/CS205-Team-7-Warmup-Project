@@ -10,6 +10,11 @@ def test():
     # Tests for example 1 and 2
     assert get_num_institutions_state(conn, "Vermont") == 32
     assert get_state_university(conn, "Cornell University") == "New York"
+    assert get_population_university(conn, "Cornell University") == 23449
+    assert get_city_university(conn, "Cornell University") == "Ithaca"
+    assert get_population_state(conn, "Vermont") == 625741
+    assert get_capital_state(conn, "Vermont") == "Montpelier"
+    assert list_university_state(conn, "Virginia") == "University of Virginia"
     print("Passed all test cases")
     conn.close()
 
@@ -34,22 +39,34 @@ def get_state_university(conn, arg):
 
 def get_population_university(conn, arg):
     c = conn.cursor()
-    c.execute('''SELECT population FROM states WHERE name=?''', (arg,))
+    c.execute('''SELECT population FROM universities WHERE name=?''', (arg,))
     return c.fetchall()[0][0]
 
 def get_city_university(conn, arg):
     c = conn.cursor()
-    c.execute('''SELECT city FROM states WHERE name=?''', (arg,))
+    c.execute('''SELECT city FROM universities WHERE name=?''', (arg,))
     return c.fetchall()[0][0]
 
 def get_population_state(conn, arg):
-    raise NotImplementedError
+    #raise NotImplementedError
+    c = conn.cursor()
+    c.execute('''SELECT population FROM states WHERE name=?''', (arg,))
+    return c.fetchall()[0][0]
 
 def get_capital_state(conn, arg):
-    raise NotImplementedError
+    c = conn.cursor()
+    c.execute('''SELECT capital FROM states WHERE name=?''', (arg,))
+    return c.fetchall()[0][0]
+    #raise NotImplementedError
 
 def list_university_state(conn, arg):
-    raise NotImplementedError
+    #raise NotImplementedError
+    c = conn.cursor()
+    c.execute('''SELECT universities.name
+                FROM (universities JOIN states ON universities.state = states.id)
+                WHERE states.name = ?''', (arg,))
+    return c.fetchall()[0][0]
+
 
 def in_state_capital_university(conn, arg):
     raise NotImplementedError
