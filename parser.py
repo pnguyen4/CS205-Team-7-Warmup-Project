@@ -1,6 +1,11 @@
 import loading_database as dbIO
+import os
 
 def test():
+    if os.path.exists('StateUniversities.db'):
+        global database
+        database = dbIO.load_DB_wrapper()
+
     print("Enter Command (run 'HELP' to see the guide):")
     while True:
         print(" > ", end='')
@@ -88,7 +93,7 @@ def exit(_=None, __=None):
 database = None
 def load_data(_=None, __=None):
     global database
-    database = dbIO.load_DB_wrapper()
-    return "Database Loaded."
+    database = dbIO.create_DB_wrapper()
+    return "Database created from csv files."
 
 test()

@@ -22,6 +22,9 @@ def test():
 def load_DB_wrapper():
     return db.load_database()
 
+def create_DB_wrapper():
+    return db.create_database()
+
 # Example 1: query one value from one row
 def get_num_institutions_state(arg, conn):
     if conn == None:

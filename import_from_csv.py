@@ -1,4 +1,4 @@
-import sqlite3, csv, os
+import sqlite3, csv
 
 def create_database():
     conn = sqlite3.connect('StateUniversities.db')
@@ -22,14 +22,10 @@ def create_database():
         conn.commit()
     file2.close()
 
-    print("\n imported successfully")
+    print("\nImported csv successfully!")
     return conn
 
 def load_database():
-    if os.path.exists('StateUniversities.db'):
-        conn = sqlite3.connect('StateUniversities.db')
-        print("loading existing database")
-    else:
-        conn = create_database()
-        print("created new database")
+    conn = sqlite3.connect('StateUniversities.db')
+    print("Loading existing database.")
     return conn
