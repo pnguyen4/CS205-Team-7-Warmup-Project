@@ -1,6 +1,8 @@
-import sqlite3, csv
+import sqlite3, csv, os
 
 def create_database():
+    if os.path.exists('StateUniversities.db'):
+        os.remove('StateUniversities.db')
     conn = sqlite3.connect('StateUniversities.db')
     c = conn.cursor()
 
