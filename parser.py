@@ -8,7 +8,7 @@ def test():
 
     print("Enter Command (run 'HELP' to see the guide):")
     while True:
-        print(" > ", end='')
+        print(">>> ", end='')
         #get user input
         userInput = input()
         tokens = parser(userInput)

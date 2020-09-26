@@ -24,7 +24,7 @@ def create_database():
         conn.commit()
     file2.close()
 
-    print("\nImported csv successfully!")
+    print("Imported csv successfully!")
     return conn
 
 def load_database():
