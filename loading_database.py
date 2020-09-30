@@ -38,7 +38,7 @@ def get_num_institutions_state(arg, conn):
     if len(result) != 0:
         return result[0][0]
     else:
-        return "No result for argument: " + arg
+        return arg + " does not exist in states table. Please enter a valid state."
 
 # Example 2: query one value that depends on both rows
 def get_state_university(arg, conn):
@@ -54,7 +54,7 @@ def get_state_university(arg, conn):
     if len(result) != 0:
         return result[0][0]
     else:
-        return "No result for argument: " + arg
+        return arg + " does not exist in universities table. Please enter a valid university."
 
 
 def get_population_university(arg, conn):
@@ -66,7 +66,7 @@ def get_population_university(arg, conn):
     if len(result) != 0:
         return result[0][0]
     else:
-        return "No result for argument: " + arg
+        return arg + " does not exist in universities table. Please enter a valid university."
 
 def get_city_university(arg, conn):
     if conn == None:
@@ -77,7 +77,7 @@ def get_city_university(arg, conn):
     if len(result) != 0:
         return result[0][0]
     else:
-        return "No result for argument: " + arg
+        return arg + " does not exist in universities table. Please enter a valid university."
 
 def get_population_state(arg, conn):
     if conn == None:
@@ -89,7 +89,7 @@ def get_population_state(arg, conn):
     if len(result) != 0:
         return result[0][0]
     else:
-        return "No result for argument: " + arg
+        return arg + " does not exist in states table. Please enter a valid state."
 
 def get_capital_state(arg, conn):
     if conn == None:
@@ -100,7 +100,7 @@ def get_capital_state(arg, conn):
     if len(result) != 0:
         return result[0][0]
     else:
-        return "No result for argument: " + arg
+        return arg + " does not exist in states table. Please enter a valid state."
 
 def list_university_state(arg, conn):
     if conn == None:
@@ -133,7 +133,7 @@ def in_state_capital_university(arg, conn):
     if len(result) != 0:
         return result[0][0]
     else:
-        return "No result for argument: " + arg
+        return arg + " does not exist in universities table. Please enter a valid university."
 
 #test()
 
